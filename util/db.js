@@ -142,7 +142,7 @@ function insertFamily(db,
 		}
 		else {
 			if (row !== undefined) {
-				console.err(
+				console.log(
 				"family already exists");
 			}
 			return;

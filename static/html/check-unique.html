@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Check Uniqueness</title>
+</head>
+<body>
+<form method="POST" action="check">
+	<h3>Check if your family has already been registered</h3>
+	<p>If possible, searching with your family ID is preferred</p>
+	<label id="typeLabel">Input type
+		<div>
+		<input type="radio"
+		       id="typeEmail"
+		       name="inputType"
+		       value="email"
+		       required />
+		<label for="typeEmail">Email</label>
+		</div>
+		
+		<div>
+		<input type="radio"
+		       id="typeAddress"
+		       name="inputType"
+		       value="address"
+		       required />
+		<label for="typeAddress">Address</label>
+		</div>
+		
+		<div>
+		<input type="radio"
+		       id="typeFamilyId"
+		       name="inputType"
+		       value="familyId"
+		       required />
+		<label for="typeFamilyId">Family ID</label>
+		</div>
+	</label>
+	
+	<button type="submit">Search</input>
+</form>
+<script src="checkUnique.js"></script>
+</body>
+</html>

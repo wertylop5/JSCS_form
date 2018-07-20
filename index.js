@@ -2,6 +2,7 @@
 
 //TODO server side input validation
 //TODO allow users to check emails, names, address for uniqueness
+//TODO list all families, all students, and all classes
 
 const	express = require("express"),
 	bodyParser = require("body-parser");
