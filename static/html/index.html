@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Test form</title>
+
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<h1>User registration</h1>
+	<form method="POST" action="submit">
+		<h3 class="rowName"> Household Information </h3>
+		<div>
+			<table id="parentTable">
+				<tr>
+					<th></th>
+					<th>Chinese Name</th>
+					<th>Specialty</th>
+					<th>English Name</th>
+					<th>Activities</th>
+				</tr>
+				<tr>
+					<td>Father</td>
+					<td>
+						<input type="text" name="fatherChinese" required />
+					</td>
+					<td>
+						<input type="text" name="fatherSpecialty" required />
+					</td>
+					<td>
+						<input type="text" name="fatherEnglish" required />
+					</td>
+					<td>
+						<input type="text" name="fatherActivities" required />
+					</td>
+				</tr>
+				<tr>
+					<td>Mother</td>
+					<td>
+						<input type="text" name="motherChinese" required />
+					</td>
+					<td>
+						<input type="text" name="motherSpecialty" required />
+					</td>
+					<td>
+						<input type="text" name="motherEnglish" required />
+					</td>
+					<td>
+						<input type="text" name="motherActivities" required />
+					</td>
+				</tr>
+			</table>
+			<br>
+			
+			<label>Address 
+				<input type="text" name="address" required />
+			</label>
+			<label>New Address?
+				<input type="radio" id="newAddrTrue" name="newAddr" value="true" required />
+				<label for="newAddrTrue">Yes</label>
+				
+				<input type="radio" id="newAddrFalse" name="newAddr" value="false" required />
+				<label for="newAddrFalse">No</label>
+			</label>
+			<br>
+
+			<!--
+			Have a listener to ask about whether or not they would like to 
+			do it if they have 0 years
+			-->
+			<div id="teachAdminDiv">
+				<label>Years of teaching or administration in JSCS
+					<input id="yearsTeachAdmin" name="yearsTeachAdmin" type="number" min="0" required />
+				</label><br>
+			</div>
+
+			<label>Email Address 
+				<input type="email" name="email" required />
+			</label><br>
+
+			<label>Emergency Contact Phone Number
+				<input type="tel" name="phone"
+					pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+					placeholder="xxx-xxx-xxxx" required />
+			</label><br>
+		</div>
+		<br>
+
+		<h3>Student Information</h3>
+		<label>Number of students
+			<input id="numStudents" name="numStudents"
+				type="number" min="1" max="9" required />
+		</label><br>
+		
+		<table id="studentTable">
+			<tbody id="studentTableBody">
+				<tr>
+					<td></td>
+					<th>English Name</th>
+					<th>Chinese Name</th>
+					<th>Date of Birth</th>
+					<th>Assigned Class</th>
+					<th>Culture Class</th>
+					<th>Chinese Level</th>
+					<th>Gender</th>
+					<th>New Student?</th>
+				</tr>
+			</tbody>
+		</table>
+
+		<button type="submit">Submit</button>
+	</form>
+
+	<script src="index.js"></script>
+</body>
+</html>

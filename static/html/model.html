@@ -1,0 +1,41 @@
+<table id="studentTable">
+	<tbody id="studentTableBody">
+		<tr>
+			<td></td>
+			<th>English Name</th>
+			<th>Chinese Name</th>
+			<th>Date of Birth</th>
+			<th>Chinese Level</th>
+			<th>Assigned Class</th>
+			<th>Culture Class</th>
+			<th>Gender</th>
+			<th>New Student?</th>
+		</tr>
+		
+		<tr>
+			<td class="rowName">Student 1</td>
+			<td>
+				<input type="text" name="englishName" required />
+			</td>
+			<td>
+				<input type="text" name="chineseName" required />
+			</td>
+			<td><input type="date" name="dob" required /></td>
+			<td><input type="text" name="chineseLevel" required /></td>
+			<td><input type="text" name="assignedClass" required /></td>
+			<td><input type="text" name="cultureClass" required /></td>
+			<td>
+				<input type="radio" id="genderM" name="gender" value="m" required />
+				<label for="genderM">M</label>
+				<input type="radio" id="genderF" name="gender" value="f" required />
+				<label for="genderF">F</label>
+			</td>
+			<td>
+				<input type="radio" id="newStudentTrue" name="newStudent" value="true" required />
+				<label for="newStudentTrue">Yes</label>
+				<input type="radio" id="newStudentFalse" name="newStudent" value="false" required />
+				<label for="newStudentFalse">No</label>
+			</td>
+		</tr>
+	</tbody>
+</table>
