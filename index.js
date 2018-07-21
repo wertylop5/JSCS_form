@@ -20,6 +20,7 @@ app.use(express.static("static/html"));
 app.use(express.static("static/css"));
 app.use(express.static("static/js"));
 app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
 
 app.post("/submit", (req, res) => {
 	console.log(req.body);
@@ -37,6 +38,13 @@ app.post("/submit", (req, res) => {
 	db.insertFamily(familyData, parentData, studentData);
 	
 	res.redirect("/");
+});
+
+app.get("/check", (req, res) => {
+	console.log(req.query);
+	//db.checkUnique();
+	//res.redirect("/check-unique.html");
+	res.end();
 });
 
 app.listen(PORT, HOST, () => {
@@ -64,7 +72,7 @@ app.listen(PORT, HOST, () => {
 	}];
 	let studentData = [];
 	studentData[1] = { EnglishName: 'Very Young',
-		ChineseName: 'Bai Mi',
+		ChineseName: '漢字Bai Mi',
 		Dob: '5/12/10',
 		AssignedClass: 'Conversation 1',
 		CultureClass: 'None',

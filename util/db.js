@@ -180,6 +180,19 @@ function insertFamily(db,
 	});
 }
 
+//type should be "email", "address", or "parentId"
+function checkUnique(db, type, value) {
+	if (type === "email") {
+		db.get(`SELECT * FROM families
+			WHERE email=?`,
+			value);
+	}
+	else if (type === "address") {
+	}
+	else if (type === "parentId") {
+	}
+}
+
 function closeDb(db) {
 	db.close(err => {
 		if (err === null) {
