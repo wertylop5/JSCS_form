@@ -38,7 +38,8 @@ app.post("/submit", (req, res) => {
 	console.log(parentData[0]);
 	console.log(parentData[1]);
 	console.log(studentData[1]);
-	db.insertFamily(familyData, parentData, studentData);
+	db.insertFamily(dbRef,
+		familyData, parentData, studentData);
 	
 	res.redirect("/");
 });
@@ -89,7 +90,7 @@ app.listen(PORT, HOST, () => {
 	studentData[1] = { EnglishName: 'Very Young',
 		ChineseName: '漢字Bai Mi',
 		Dob: '5/12/10',
-		AssignedClass: 'Conversation 1',
+		AssignedClass: '6A',
 		CultureClass: 'None',
 		ChineseLevel: 'intermediate',
 		Gender: 'f',
