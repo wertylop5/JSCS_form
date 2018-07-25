@@ -9,12 +9,17 @@ let yearsTeachAdmin = document.getElementById("yearsTeachAdmin");
 const STUDENT_ID_BASE = "student";
 let curStudents = 0;
 
+let langClasses;
+
 /*
  * attributes defined as:
  * {
  * name: value,
  * ...
  * }
+ *
+ * This is a shorthand for the built-in
+ * element creation function
  * */
 function constructElement(tagName, attributes, innerHtml=null) {
 	let res = document.createElement(tagName);
@@ -58,10 +63,31 @@ function createRadioButtons(groupName, values, ids, labelText) {
 	return res;
 }
 
+//places the tag within <td> tags
 function wrapTd(element) {
 	let res = document.createElement("td");
 	res.appendChild(element);
 	return res;
+}
+
+//gets all the language class names in
+//the database
+function getLangClasses() {
+	let request = new XMLHttpRequest();
+	request.open("GET", "/lang-classes", true);
+	request.responseType = "json";
+	request.send();
+
+	return new Promise((resolve, reject) => {
+		
+		request.addEventListener("load",
+			e => {
+				console.log(
+					JSON.stringify(request.response)
+				);
+				resolve(request.response);
+			});
+	});
 }
 
 //see static/html/model for the mock-up of
@@ -99,6 +125,7 @@ function addStudentRow(idNum) {
 			required: ""
 		}))
 	);
+	
 	
 	trBase.appendChild(
 		wrapTd(constructElement("input", {
@@ -160,6 +187,9 @@ function removeStudentRow(idNum) {
 	targ.remove();
 }
 
+//add or delete student rows
+//there's a slight bug where the count can get
+//out of sync
 numStudentsPicker.addEventListener("change", event => {
 	let newNum = parseInt(event.target.value);
 	console.log(newNum);
@@ -181,6 +211,9 @@ numStudentsPicker.addEventListener("change", event => {
 	}
 });
 
+//whether or not to give the user the option
+//to sign up to be on the administration or
+//to be a teacher
 yearsTeachAdmin.addEventListener("change", event => {
 	let labelId = "teachAdminLabel";
 	if (parseInt(event.target.value) === 0) {
@@ -202,6 +235,10 @@ yearsTeachAdmin.addEventListener("change", event => {
 		let teachAdminLabel = document.getElementById(labelId);
 		if (teachAdminLabel != null) teachAdminLabel.remove();
 	}
+});
+
+getLangClasses().then(classes => {
+	langClasses = classes;
 });
 
 })()

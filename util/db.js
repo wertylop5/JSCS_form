@@ -75,6 +75,94 @@ function initDb(db) {
 		gender STRING,
 		is_new integer
 	);`);
+
+	db.run(`CREATE TABLE IF NOT EXISTS lang_classes (
+		lang_class_id STRING PRIMARY KEY,
+		class_name_ch STRING
+	);`);
+
+	let classes = [
+		{
+			id: "PKA",
+			name: "小幼班"
+		},
+		{
+			id: "KA",
+			name: "幼稚班"
+		},
+		{
+			id: "1A",
+			name: "一年級"
+		},
+		{
+			id: "2A",
+			name: "二年級",
+		},
+		{
+			id: "3A",
+			name: "三年級"
+		},
+		{
+			id: "4A",
+			name: "四年級"
+		},
+		
+		{
+			id: "5A",
+			name: "五年級"
+		},
+		{
+			id: "6A",
+			name: "六年級"
+		},
+		{
+			id: "7A",
+			name: "七年級"
+		},
+		{
+			id: "8A",
+			name: "八年級",
+		},
+		{
+			id: "9A",
+			name: "九年級"
+		},
+		{
+			id: "10",
+			name: "十年級"
+		},
+		
+		{
+			id: "12",
+			name: "十一+十二年級"
+		},
+		{
+			id: "C1/2",
+			name: "會話 (Beginner)"
+		},
+		{
+			id: "C3/4",
+			name: "會話 (Intermediate I)"
+		},
+		{
+			id: "C5/6",
+			name: "會話 (Intermediate II)",
+		},
+		{
+			id: "CA2",
+			name: "會話 (Adult)"
+		},
+		{
+			id: "C7",
+			name: "會話 (Advanced)"
+		}
+	];
+	for (let lang_class of classes) {
+		db.run(`INSERT OR IGNORE INTO lang_classes VALUES (
+			?, ?
+		);`, lang_class.id, lang_class.name);
+	}
+	
 	return db;
 }
 
@@ -193,6 +281,24 @@ function checkUnique(db, type, value) {
 	}
 }
 
+function getLangClasses(db) {
+	return new Promise((resolve, reject) => {
+		let data = [];
+		db.all(`SELECT * FROM lang_classes;`,
+			(err, rows) => {
+				if (err) {
+					console.log(`err getting classes: ${err}`);
+					reject(err);
+				}
+				for (let row of rows) {
+					console.log(JSON.stringify(row));
+					data.push(row);
+				}
+				resolve(data);
+			});
+	});
+}
+
 function closeDb(db) {
 	db.close(err => {
 		if (err === null) {
@@ -206,6 +312,7 @@ module.exports = {
 	initDb,
 	openDb,
 	insertFamily,
+	getLangClasses,
 	closeDb
 };
 

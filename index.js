@@ -16,9 +16,12 @@ const HOST = "localhost";
 let app = express();
 let dbRef;
 
+//handles requests for static resource files
 app.use(express.static("static/html"));
 app.use(express.static("static/css"));
 app.use(express.static("static/js"));
+
+//handles form data submission
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
@@ -45,6 +48,12 @@ app.get("/check", (req, res) => {
 	//db.checkUnique();
 	//res.redirect("/check-unique.html");
 	res.end();
+});
+
+app.get("/lang-classes", (req, res) => {
+	db.getLangClasses(dbRef).then(classes => {
+		res.end(JSON.stringify(classes));
+	});
 });
 
 app.listen(PORT, HOST, () => {
