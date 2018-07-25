@@ -1,12 +1,13 @@
 "use strict";
 
-//(() => {
+(() => {
 
 let queryLabel = document.getElementById("queryLabel");
 let queryTextbox = document.getElementById("queryTextbox");
 let selectBox = document.getElementById("typeSelect");
 let choiceElems = document.getElementsByTagName("option");
 let submitButton = document.getElementById("submitButton");
+let uniqueStatus = document.getElementById("uniqueStatus");
 
 const CHOICE_FUNCTS = {
 "email"	  : e => {
@@ -48,17 +49,29 @@ function init() {
 			queryTextbox.validity.valueMissing) {
 			return;
 		}
+		
 		let dbReq = new XMLHttpRequest();
-		dbReq.open("GET", `
-/check?type=${encodeURIComponent(getSelectedOption())}&value=${encodeURIComponent(queryTextbox.value)}`, true);
-		dbReq.overrideMimeType("application/json");
+		dbReq.open("GET", `/check?
+			type=${
+				encodeURIComponent(getSelectedOption())
+			}&
+			value=${
+				encodeURIComponent(queryTextbox.value)
+			}`,
+			true);
+		dbReq.overrideMimeType("text/plain");
 		
 		dbReq.send();
 		dbReq.addEventListener("load", e => {
-			console.log(dbReq.response);
-			let res =
-				JSON.parse(dbReq.response);
-			console.log(res);
+			if (dbReq.response === "true") {
+				uniqueStatus.innerHTML = "unique";
+			}
+			else if (dbReq.response === "false") {
+				uniqueStatus.innerHTML = "not unique";
+			}
+			else {
+				console.log("error");
+			}
 		});
 		queryTextbox.value = "";
 	});
@@ -71,4 +84,5 @@ window.onload = () => {
 	CHOICE_FUNCTS[getSelectedOption()]();
 };
 
-//}());
+})();
+

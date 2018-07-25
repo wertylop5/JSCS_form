@@ -269,16 +269,28 @@ function insertFamily(db,
 }
 
 //type should be "email", "address", or "parentId"
-function checkUnique(db, type, value) {
-	if (type === "email") {
-		db.get(`SELECT * FROM families
-			WHERE email=?`,
-			value);
+function checkUnique(db, type, value, cb) {
+	let filteredType;
+	if (type === "email" ||
+		type === "address") {
+		filteredType = type;
 	}
-	else if (type === "address") {
+	else if (type === "familyId") {
+		filteredType = "fam_id";
 	}
-	else if (type === "parentId") {
+	else {
+		throw "Invalid query type";
 	}
+	
+	let query = `SELECT * FROM families
+		WHERE ${filteredType}=?`;
+	
+	return new Promise((resolve, reject) => {
+		db.get(query, value, (err, row) => {
+			if (row === undefined) resolve("true");
+			resolve("false");
+		});
+	});
 }
 
 function getLangClasses(db) {
@@ -291,7 +303,6 @@ function getLangClasses(db) {
 					reject(err);
 				}
 				for (let row of rows) {
-					console.log(JSON.stringify(row));
 					data.push(row);
 				}
 				resolve(data);
@@ -312,6 +323,7 @@ module.exports = {
 	initDb,
 	openDb,
 	insertFamily,
+	checkUnique,
 	getLangClasses,
 	closeDb
 };

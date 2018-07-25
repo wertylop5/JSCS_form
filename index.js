@@ -44,10 +44,16 @@ app.post("/submit", (req, res) => {
 });
 
 app.get("/check", (req, res) => {
-	console.log(req.query);
-	//db.checkUnique();
-	//res.redirect("/check-unique.html");
-	res.end();
+	console.log(`uniqueness query: ${
+		JSON.stringify(req.query)
+	}`);
+	
+	db.checkUnique(dbRef,
+		req.query.type, req.query.value,
+		res.end).then(status => {
+			console.log(status);
+			res.end(status);
+		});
 });
 
 app.get("/lang-classes", (req, res) => {

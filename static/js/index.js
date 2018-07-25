@@ -79,12 +79,8 @@ function getLangClasses() {
 	request.send();
 
 	return new Promise((resolve, reject) => {
-		
 		request.addEventListener("load",
 			e => {
-				console.log(
-					JSON.stringify(request.response)
-				);
 				resolve(request.response);
 			});
 	});
@@ -126,14 +122,20 @@ function addStudentRow(idNum) {
 		}))
 	);
 	
-	
-	trBase.appendChild(
-		wrapTd(constructElement("input", {
-			type: "date",
-			name: `${BASE_ID}AssignedClass`,
-			required: ""
-		}))
-	);
+	//assigned class selection
+	let selectTemp = constructElement("select", {
+		name: `${BASE_ID}AssignedClass`,
+		required: ""
+	});
+	for (let langClass of langClasses) {
+		selectTemp.appendChild(constructElement(
+		"option", {
+			value: langClass.lang_class_id
+		}, 
+			`${langClass.lang_class_id}/
+			${langClass.class_name_ch}`));
+	}
+	trBase.appendChild(wrapTd(selectTemp));
 	
 	trBase.appendChild(
 		wrapTd(constructElement("input", {
