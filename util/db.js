@@ -309,6 +309,72 @@ function getLangClasses(db) {
 			});
 	});
 }
+/*
+function getStudents(db, args = null) {
+	let query;
+	let statement;
+	if (args === null) {
+		query = `SELECT
+				lang_class_id,
+				class_name_ch,
+				student_id,
+				name_en,
+				name_ch,
+				dob,
+				gender
+			FROM students
+			INNER JOIN lang_classes ON
+				lang_classes.lang_class_id =
+					students.class_assigned;
+		`;
+		
+		statement = db.prepare(query, err => {
+			if (err !== null) {
+				console.log(`error prepping statement: 
+					${err}`);
+			}
+		});
+	}
+	else {}
+
+	let students = [];
+	let done = false;
+	
+	while (!done) {
+		statement.get((err, row) => {
+			if (row === undefined) {
+				done = true;
+				return;
+			}
+			
+			let res = {};
+			res["lang_class_id"] = row["lang_class_id"];
+			res["class_name_ch"] = row["class_name_ch"];
+			res["students"] = [];
+			res["students"].push({
+				student_id	: row["student_id"],
+				name_en		: row["name_en"],
+				name_ch		: row["name_ch"],
+				dob			: row["dob"],
+				gender		: row["gender"],
+			});
+			
+			students.push(res);
+		});
+	}
+	
+	
+	return students;
+}
+*/
+
+function getClassEnrollment(db) {
+	getLangClasses(db).then(classes => {
+		for (let class of classes) {
+			let query = `SELECT `;
+		}
+	});
+}
 
 function closeDb(db) {
 	db.close(err => {
@@ -325,6 +391,7 @@ module.exports = {
 	insertFamily,
 	checkUnique,
 	getLangClasses,
+	//getStudents,
 	closeDb
 };
 

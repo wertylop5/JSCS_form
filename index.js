@@ -63,6 +63,16 @@ app.get("/lang-classes", (req, res) => {
 	});
 });
 
+//client should probably pass along args
+//the query will be assembled server side
+app.get("/query", (req, res) => {
+	console.log(`student query: ${
+		JSON.stringify(req.query)
+	}`);
+	
+	res.end(`{um: "hi"}`);
+});
+
 app.listen(PORT, HOST, () => {
 	console.log(`listening on ${HOST}:${PORT}`);
 	dbRef = db.openDb();
