@@ -104,12 +104,30 @@ app.listen(PORT, HOST, () => {
 	}];
 	let studentData = [];
 	studentData[1] = { EnglishName: 'Very Young',
-		ChineseName: '漢字Bai Mi',
+		ChineseName: '漢字',
 		Dob: '5/12/10',
 		AssignedClass: '6A',
 		CultureClass: 'None',
 		ChineseLevel: 'intermediate',
 		Gender: 'f',
+		NewStudent: 'true'
+	};
+	studentData[2] = { EnglishName: 'Brian Young',
+		ChineseName: '漢鳥',
+		Dob: '10/12/04',
+		AssignedClass: '6A',
+		CultureClass: 'None',
+		ChineseLevel: 'intermediate',
+		Gender: 'f',
+		NewStudent: 'true'
+	};
+	studentData[3] = { EnglishName: 'Nick Li',
+		ChineseName: '魚頭',
+		Dob: '2/09/02',
+		AssignedClass: 'PKA',
+		CultureClass: 'None',
+		ChineseLevel: 'intermediate',
+		Gender: 'm',
 		NewStudent: 'true'
 	};
 	db.insertFamily(dbRef,

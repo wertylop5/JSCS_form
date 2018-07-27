@@ -246,7 +246,7 @@ function insertFamily(db,
 			data.push(null);
 		}
 	}
-	console.log(`data: ${data}`);
+	//console.log(`data: ${data}`);
 	
 	db.run(`INSERT INTO families VALUES (
 		?, ?, ?, ?, ?, ?, ?
@@ -258,7 +258,7 @@ function insertFamily(db,
 			console.log(err);
 		}
 		else {
-			console.log(row);
+			//console.log(row);
 			let famId = row["fam_id"];
 			insertStudents(db,
 				famId, studentData);
@@ -372,6 +372,9 @@ function getClassEnrollment(db) {
 	return getLangClasses(db).then(classes => {
 		db.parallelize();
 		
+		//the weakness of this is that the
+		//results may not be in order of
+		//class id
 		return Promise.all(classes.map(c => 
 			new Promise((resolve, reject) => {
 				db.all(`

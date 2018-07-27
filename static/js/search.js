@@ -65,9 +65,24 @@ function getEnrollment(args = null) {
 }
 
 function buildTable(data) {
+	let studentRows = document.getElementsByClassName(
+		"studentRow");
+	if (studentRows !== null) {
+		//HTMLCollection changes when deleting
+		//items from list with remove().
+		//convert it to Array instead
+		let rows = Array.prototype
+			.map.call(studentRows, row => row);
+		
+		for (let row of rows) {
+			row.remove();
+		}
+	}
+	
 	for (let classEntry of data) {
 		if (classEntry.students.length > 0) {
 			let row = document.createElement("tr");
+			row.classList.add("studentRow");
 			
 			row.appendChild(constructElement("td", {
 				rowspan: classEntry.students.length
@@ -76,6 +91,9 @@ function buildTable(data) {
 				classEntry.students.length
 			})`));
 
+			//special handling of the first student,
+			//since they are on the same row as the
+			//classname
 			let firstStudent = classEntry.students[0];
 			row.appendChild(constructElement("td", {},
 				`${firstStudent["name_en"]}/
@@ -93,6 +111,7 @@ function buildTable(data) {
 			for (let student of classEntry.students
 					.slice(1)) {
 				let tempRow = document.createElement("tr");
+				tempRow.classList.add("studentRow");
 				tempRow.appendChild(
 					constructElement("td", {},
 					`${student["name_en"]}/
@@ -110,8 +129,13 @@ function buildTable(data) {
 				classTable.appendChild(tempRow);
 			}
 		}
-		classTable.appendChild(
-			document.createElement("tr"));
+		/*
+		let newLine = document.createElement("tr");
+		newLine.appendChild(constructElement("td", {
+			colspan: 4
+		}));
+		classTable.appendChild(newLine);
+		*/
 	}
 }
 
