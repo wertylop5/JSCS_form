@@ -69,8 +69,14 @@ app.get("/query", (req, res) => {
 	console.log(`student query: ${
 		JSON.stringify(req.query)
 	}`);
+
+	if (req.query["all"] === "true") {
+		db.getClassEnrollment(dbRef).then(classes => {
+			res.end(JSON.stringify(classes));
+		});
+	}
 	
-	res.end(`{um: "hi"}`);
+	//res.end(`{um: "hi"}`);
 });
 
 app.listen(PORT, HOST, () => {

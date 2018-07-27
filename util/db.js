@@ -369,10 +369,49 @@ function getStudents(db, args = null) {
 */
 
 function getClassEnrollment(db) {
-	getLangClasses(db).then(classes => {
-		for (let class of classes) {
-			let query = `SELECT `;
-		}
+	return getLangClasses(db).then(classes => {
+		db.parallelize();
+		
+		return Promise.all(classes.map(c => 
+			new Promise((resolve, reject) => {
+				db.all(`
+				SELECT 
+					student_id,
+					name_en,
+					name_ch,
+					dob,
+					gender
+				FROM students WHERE
+					class_assigned = ?;
+				`, c.lang_class_id, (err, rows) => {
+					if (rows === undefined) {
+						resolve(null);
+						return;
+					}
+					
+					let entry = {
+						lang_class_id: c["lang_class_id"],
+						class_name_ch: c["class_name_ch"],
+						students: []
+					};
+					
+					for (let r of rows) {
+						entry["students"].push({
+							student_id	: r["student_id"],
+							name_en		: r["name_en"],
+							name_ch		: r["name_ch"],
+							dob			: r["dob"],
+							gender		: r["gender"]
+						});
+					}
+					
+					resolve(entry);
+				});
+			})
+		)).then(entries => {
+			db.serialize();
+			return entries;
+		});
 	});
 }
 
@@ -392,6 +431,7 @@ module.exports = {
 	checkUnique,
 	getLangClasses,
 	//getStudents,
+	getClassEnrollment,
 	closeDb
 };
 
