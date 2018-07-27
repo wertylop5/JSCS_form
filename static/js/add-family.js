@@ -139,7 +139,7 @@ function addStudentRow(idNum) {
 	
 	trBase.appendChild(
 		wrapTd(constructElement("input", {
-			type: "date",
+			type: "text",
 			name: `${BASE_ID}CultureClass`,
 			required: ""
 		}))
